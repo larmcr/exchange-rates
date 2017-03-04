@@ -53,8 +53,16 @@ const setResult = (entity, result) => {
   $('#result').add(div);
 };
 
-const getExchangeRates = (entity) => {
-  $('#result').set('$', '+spinner');
-  $.request('get', `${PREFIX}${urls[entity]}`)
-    .then((result) => setResult(entity, result));
+const showExchangeRatesOfEntitiy = (event) => {
+  var id = $(event.target).get('id');
+  console.info(id);
+  var entity = entities[id];
+  console.info(entity.url);
+  // $('#result').set('$', '+spinner');
+  $.request('get', `${PREFIX}${entity.url}`)
+    .then((result) => setResult(id, result));
 }
+
+$(() => {
+  $('.entity').onClick(showExchangeRatesOfEntitiy);
+});
