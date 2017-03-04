@@ -37,7 +37,7 @@ const setResult = (id, entity, result) => {
 
 const showExchangeRates = (id) => {
   var entity = entities[id];
-  // $('#result').set('$', '+spinner');
+  $('#result').set('$', '+spinner');
   $.request('get', `${PREFIX}${entity.url}`)
     .then((result) => setResult(id, entity, result));
 };
@@ -48,9 +48,14 @@ const onEntityClicked = (event) => {
 };
 
 const addEntities = () => {
-  
+  for (let id in entities) {
+    const entity = entities[id];
+    const div = EE('div', { '@id': id, '$': 'entity siimple-btn siimple-btn--blue' }, entity['name']);
+    $(div).onClick(onEntityClicked);
+    $('#entities').add(div);
+  };
 };
 
 $(() => {
-  $('.entity').onClick(onEntityClicked);
+  addEntities();
 });
