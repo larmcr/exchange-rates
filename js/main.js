@@ -32,20 +32,26 @@ const removeAndAddSibling = (id, element) => {
 
 const showResult = (id, entity, result) => {
   const eRs = entity['parse'](result);
-  const div = EE('div', { '$': `${id} siimple-alert siimple-alert--done` }, [
+  const div = EE('div', {
+    '$': `${id} siimple-alert siimple-alert--done`
+  }, [
     getTranslation(eRs, 'es', 'buy'),
     getTranslation(eRs, 'es', 'sell'),
   ]);
   removeAndAddSibling(id, div);
 };
 
-const showError = (id, entity, status, statusText, responseText) => {
-  const div = EE('div', { '$': `${id} siimple-alert siimple-alert--error` }, `${status} -> ${statusText} -> ${responseText}`);
+const showError = (id, status, statusText, responseText) => {
+  const div = EE('div', {
+    '$': `${id} siimple-alert siimple-alert--error`
+  }, `${status} -> ${statusText} -> ${responseText}`);
   removeAndAddSibling(id, div);
 };
 
 const showSpinner = (id) => {
-  const spinner = EE('div', { '$': `${id} spinner` });
+  const spinner = EE('div', {
+    '$': `${id} spinner`
+  });
   removeAndAddSibling(id, spinner);
 }
 
@@ -54,7 +60,7 @@ const showExchangeRates = (id) => {
   var entity = entities[id];
   $.request('get', `${PREFIX}${entity.url}`)
     .then((result) => showResult(id, entity, result))
-    .error((status, statusText, responseText) => showError(id, entity, status, statusText, responseText));
+    .error((status, statusText, responseText) => showError(id, status, statusText, responseText));
 };
 
 const onEntityClicked = (event) => {
@@ -64,13 +70,25 @@ const onEntityClicked = (event) => {
 
 const addEntities = () => {
   for (let id in entities) {
+    const cbId = `cb-${id}`;
+    const checkbox = EE('div', {
+    '$': 'siimple-checkbox',
+    '@title': 'Comparar',
+    }, [
+      EE('input', { '@type': 'checkbox', '@value': id, '@id': cbId }),
+      EE('label', { '@for': cbId }),
+    ]);
     const entity = entities[id];
-    const div = EE('div', { '@id': id, '$': 'entity siimple-btn siimple-btn--blue' }, entity['name']);
+    const div = EE('div', {
+      '@id': id,
+      '$': 'entity siimple-btn siimple-btn--blue',
+    }, entity['name']);
+    $('#entities').add(checkbox).add(div);
     $(div).onClick(onEntityClicked);
-    $('#entities').add(div);
   };
 };
 
 $(() => {
   addEntities();
+  //addCheckboxes();
 });
