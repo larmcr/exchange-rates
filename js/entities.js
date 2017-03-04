@@ -14,5 +14,16 @@ const entities = {
       } = $.parseJSON(result);
       return cleanData(TipoCambioCompra, TipoCambioVenta);
     }
+  },
+  bncr: {
+    name: 'Banco Nacional de Costa Rica (BNCR)',
+    url: 'http://www.bccr.fi.cr/Indicadores/IndicadoresJSON.ashx',
+    parse: (result) => {
+      const {
+        TipoCambioCompra,
+        TipoCambioVenta
+      } = $.parseJSON(result);
+      return cleanData(TipoCambioCompra, TipoCambioVenta);
+    }
   }
 };

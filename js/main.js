@@ -25,34 +25,36 @@ const getTranslation = (eRs, locale, type) => {
   ]);
 };
 
-const setResult = (id, entity, result) => {
+const removeAndAddSibling = (id, element) => {
+  $(`.${id}`).remove();
+  $(`#${id}`).addAfter(element);
+};
+
+const showResult = (id, entity, result) => {
   const eRs = entity['parse'](result);
   const div = EE('div', { '$': `${id} siimple-alert siimple-alert--done` }, [
     getTranslation(eRs, 'es', 'buy'),
     getTranslation(eRs, 'es', 'sell'),
   ]);
-  $(`.${id}`).remove();
-  $(`#${id}`).addAfter(div);
+  removeAndAddSibling(id, div);
 };
 
-const handleError = (id, entity, status, statusText, responseText) => {
+const showError = (id, entity, status, statusText, responseText) => {
   const div = EE('div', { '$': `${id} siimple-alert siimple-alert--error` }, `${status} -> ${statusText} -> ${responseText}`);
-  $(`.${id}`).remove();
-  $(`#${id}`).addAfter(div);
+  removeAndAddSibling(id, div);
 };
 
-const addSpinner = (id) => {
+const showSpinner = (id) => {
   const spinner = EE('div', { '$': `${id} spinner` });
-  $(`.${id}`).remove();
-  $(`#${id}`).addAfter(spinner);
+  removeAndAddSibling(id, spinner);
 }
 
 const showExchangeRates = (id) => {
-  addSpinner(id);
+  showSpinner(id);
   var entity = entities[id];
   $.request('get', `${PREFIX}${entity.url}`)
-    .then((result) => setResult(id, entity, result))
-    .error((status, statusText, responseText) => handleError(id, entity, status, statusText, responseText));
+    .then((result) => showResult(id, entity, result))
+    .error((status, statusText, responseText) => showError(id, entity, status, statusText, responseText));
 };
 
 const onEntityClicked = (event) => {
