@@ -44,7 +44,7 @@ const showResult = (id, entity, result) => {
 const showError = (id, status, statusText, responseText) => {
   const div = EE('div', {
     '$': `${id} siimple-alert siimple-alert--error`
-  }, `${status} -> ${statusText} -> ${responseText}`);
+  }, 'Error al obtener información de la entidad');
   removeAndAddSibling(id, div);
 };
 
@@ -69,6 +69,7 @@ const onEntityClicked = (event) => {
 };
 
 const addEntities = () => {
+  const list = [];
   for (let id in entities) {
     const cbId = `cb-${id}`;
     const checkbox = EE('div', {
@@ -83,12 +84,12 @@ const addEntities = () => {
       '@id': id,
       '$': 'entity siimple-btn siimple-btn--blue',
     }, entity['name']);
-    $('#entities').add(checkbox).add(div);
-    $(div).onClick(onEntityClicked);
+    list.push(checkbox, div);
   };
+  $('#entities').add(list);
+  $('.entity').onClick(onEntityClicked);
 };
 
 $(() => {
   addEntities();
-  //addCheckboxes();
 });
