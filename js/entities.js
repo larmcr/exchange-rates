@@ -7,6 +7,7 @@ const entities = {
   bccr: {
     name: 'Banco Central de Costa Rica (BCCR)',
     url: 'http://www.bccr.fi.cr/Indicadores/IndicadoresJSON.ashx',
+    prefix: true,
     parse: (result) => {
       const {
         TipoCambioCompra,
@@ -17,13 +18,13 @@ const entities = {
   },
   bncr: {
     name: 'Banco Nacional de Costa Rica (BNCR)',
-    url: 'http://www.bccr.fi.cr/Indicadores/IndicadoresJSON.ashx',
+    url: 'http://www.bncr.fi.cr/BNCR/TipoCambio.aspx',
+    prefix: true,
     parse: (result) => {
-      const {
-        TipoCambioCompra,
-        TipoCambioVenta
-      } = $.parseJSON(result);
-      return cleanData(TipoCambioCompra, TipoCambioVenta);
+      const html = HTML(result);
+      const buy = $(html.select('.compra')[0]).select('span').text();
+      const sell = $(html.select('.venta')[0]).select('span').text();
+      return cleanData(buy, sell);
     }
   }
 };

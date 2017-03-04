@@ -57,8 +57,9 @@ const showSpinner = (id) => {
 
 const showExchangeRates = (id) => {
   showSpinner(id);
-  var entity = entities[id];
-  $.request('get', `${PREFIX}${entity.url}`)
+  const entity = entities[id];
+  const url = entity['prefix'] ? `${PREFIX}${entity.url}` : entity.url;
+  $.request('get', url)
     .then((result) => showResult(id, entity, result))
     .error((status, statusText, responseText) => showError(id, status, statusText, responseText));
 };
