@@ -31,15 +31,24 @@ const setResult = (id, entity, result) => {
     getTranslation(eRs, 'es', 'buy'),
     getTranslation(eRs, 'es', 'sell'),
   ]);
-  $('#result').set('innerHTML', null);
-  $('#result').add(div);
+  $(`#${id}`).next().remove();
+  $(`#${id}`).addAfter(div);
+};
+
+const handleError = (id, entity, status, statusText, responseText) => {
+  const div = EE('div', { '$': 'siimple-alert siimple-alert--error' }, `${status} -> ${statusText} -> ${responseText}`);
+  $(`#${id}`).next().remove();
+  $(`#${id}`).addAfter(div);
 };
 
 const showExchangeRates = (id) => {
   var entity = entities[id];
-  $('#result').set('$', '+spinner');
+  const spinner = EE('div', { '$': '+spinner' });
+  $(`#${id}`).addAfter(spinner);
   $.request('get', `${PREFIX}${entity.url}`)
-    .then((result) => setResult(id, entity, result));
+    .then((result) => setResult(id, entity, result))
+    .error((status, statusText, responseText) => handleError(id, entity, status, statusText, responseText));
+;
 };
 
 const onEntityClicked = (event) => {

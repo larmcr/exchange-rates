@@ -5,7 +5,7 @@ const cleanData = (buy, sell) => ({
 
 const entities = {
   bccr: {
-    name: 'Banco Central de Costa Rica',
+    name: 'Banco Central de Costa Rica (BCCR)',
     url: 'http://www.bccr.fi.cr/Indicadores/IndicadoresJSON.ashx',
     parse: (result) => {
       const {
