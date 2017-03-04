@@ -85,7 +85,11 @@ const addEntities = () => {
       '@id': id,
       '$': 'entity siimple-btn siimple-btn--blue',
     }, entity['name']);
-    list.push(checkbox, div);
+    const ready = entity['ready'] ? 'siimple-alert' : 'siimple-alert--warning'
+    const message = EE('div', {
+      '$': `${id} siimple-alert` + (entity['ready'] ? '' : ' siimple-alert--warning'),
+    }, entity['ready'] ? 'Listo' : 'NO listo');
+    list.push(checkbox, div, message);
   };
   $('#entities').add(list);
   $('.entity').onClick(onEntityClicked);
