@@ -50,8 +50,10 @@ const showError = (id, status, statusText, responseText) => {
 
 const showSpinner = (id) => {
   const spinner = EE('div', {
+    '$': `${id} siimple-alert`,
+  }, [EE('span', 'Consultando...'), HTML('&nbsp;&nbsp;&nbsp;'), EE('span', {
     '$': `${id} spinner`
-  });
+  })]);
   removeAndAddSibling(id, spinner);
 }
 
@@ -76,12 +78,18 @@ const addEntities = () => {
     const entity = entities[id];
     const ready = entity['ready'];
     const checkbox = EE('div', {
-    '$': 'siimple-checkbox',
-    '@title': 'Comparar',
-    '@style': ready ? '' : 'pointer-events:none;',
+      '$': 'siimple-checkbox',
+      '@title': 'Comparar',
+      '@style': ready ? '' : 'pointer-events:none;',
     }, [
-      EE('input', { '@type': 'checkbox', '@value': id, '@id': cbId }),
-      EE('label', { '@for': cbId }),
+      EE('input', {
+        '@type': 'checkbox',
+        '@value': id,
+        '@id': cbId
+      }),
+      EE('label', {
+        '@for': cbId
+      }),
     ]);
     const div = EE('div', {
       '@id': id,
