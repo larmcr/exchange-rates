@@ -55,4 +55,17 @@ const entities = {
       return cleanData(buy, sell);
     }
   },
+  bp: {
+    name: 'Banco Popular y de Desarrollo Comunal (BP)',
+    url: 'https://www.bancopopular.fi.cr/bpop/Inicio.aspx',
+    prefix: true,
+    ready: true,
+    parse: (result) => {
+      const html = HTML(result);
+      const rates = html.select('.MoneyExchange').select('span').select('span').text().split(':');
+      const buy = rates[1].split(' ')[1].trim();
+      const sell = rates[2].split(' ')[1].trim();;
+      return cleanData(buy, sell);
+    }
+  },
 };
