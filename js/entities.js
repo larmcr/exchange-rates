@@ -1,6 +1,6 @@
 const cleanData = (buy, sell) => ({
-  buy: buy.replace(',', '.'),
-  sell: sell.replace(',', '.')
+  buy: _.formatValue('#.00', parseFloat(buy.replace(',', '.'))),
+  sell: _.formatValue('#.00', parseFloat(sell.replace(',', '.'))),
 });
 
 const entities = {
