@@ -73,23 +73,25 @@ const addEntities = () => {
   const list = [];
   for (let id in entities) {
     const cbId = `cb-${id}`;
+    const entity = entities[id];
+    const ready = entity['ready'];
     const checkbox = EE('div', {
     '$': 'siimple-checkbox',
     '@title': 'Comparar',
+    '@style': ready ? '' : 'pointer-events:none;',
     }, [
       EE('input', { '@type': 'checkbox', '@value': id, '@id': cbId }),
       EE('label', { '@for': cbId }),
     ]);
-    const entity = entities[id];
     const div = EE('div', {
       '@id': id,
       '$': 'entity siimple-btn siimple-btn--blue',
+      '@style': ready ? '' : 'pointer-events:none;',
     }, entity['name']);
-    const ready = entity['ready'] ? 'siimple-alert' : 'siimple-alert--warning'
     const message = EE('div', {
-      '$': `${id} siimple-alert` + (entity['ready'] ? '' : ' siimple-alert--warning'),
-    }, entity['ready'] ? 'Listo' : 'NO listo');
-    list.push(checkbox, div, message);
+      '$': `${id} siimple-alert ${ready ? '' : 'siimple-alert--warning'}`,
+    }, ready ? 'Disponible' : 'No Disponible');
+    list.push(checkbox, div, message, EE('br'));
   };
   $('#entities').add(list);
   $('.entity').onClick(onEntityClicked);
