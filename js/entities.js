@@ -68,4 +68,17 @@ const entities = {
       return cleanData(buy, sell);
     }
   },
+  bac: {
+    name: 'Banco BAC San José S.A.',
+    url: 'http://www.sucursalmovil.com/secm/exchangeRate.go',
+    prefix: true,
+    ready: true,
+    parse: (result) => {
+      const html = HTML(result);
+      const rates = html.select('.listTd33');
+      const buy = rates[1].innerText;
+      const sell = rates[2].innerText;
+      return cleanData(buy, sell);
+    }
+  },
 };
