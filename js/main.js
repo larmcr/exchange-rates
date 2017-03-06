@@ -67,15 +67,15 @@ const showExchangeRates = (id) => {
 };
 
 const onEntityClicked = (event) => {
-  var id = $(event.target).get('id');
+  var id = event.target ? $(event.target).get('id') : event.get('id');
   showExchangeRates(id);
 };
 
 const addEntities = () => {
   const list = [];
   for (let id in entities) {
-    const cbId = `cb-${id}`;
     const entity = entities[id];
+    const cbId = `cb-${id}`;
     const ready = entity['ready'];
     const checkbox = EE('div', {
       '$': 'siimple-checkbox',
@@ -105,6 +105,16 @@ const addEntities = () => {
   $('.entity').onClick(onEntityClicked);
 };
 
+const onClickAll = () => {
+  for (let id in entities) {
+    if (entities[id].ready) {
+      const entity = $(`#${id}`);
+      entity.trigger('click', entity);
+    }
+  };
+};
+
 $(() => {
   addEntities();
+  $('#click-all').onClick(onClickAll);
 });
