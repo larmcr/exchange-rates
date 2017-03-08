@@ -4,15 +4,19 @@ const { $, EE, HTML, _ } = MINI;
 const PREFIX = 'https://crossorigin.me/';
 const SYMBOL = '₡';
 
-const format = (val) => (
-  _.formatValue('#.00', parseFloat(val.replace(',', '.')))
-);
+const format = (val) => _.formatValue('#.00', val);
 
-const cleanData = (buy, sell) => ({
-  buy: format(buy),
-  sell: format(sell),
-  avg: _.formatValue('#.00', (parseFloat(buy.replace(',', '.')) + parseFloat(sell.replace(',', '.'))) / 2),
-});
+const parse = (val) => parseFloat(val.replace(',', '.'));
+
+const cleanData = (buy, sell) => {
+  const buyParsed = parse(buy);
+  const sellParsed = parse(sell);
+  return {
+    buy: format(buyParsed),
+    sell: format(sellParsed),
+    avg: format((buyParsed + sellParsed) / 2),
+  };
+};
 
 const groups = {
   public: 'Bancos públicos',
