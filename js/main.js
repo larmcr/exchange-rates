@@ -1,8 +1,5 @@
 const MINI = require('minified');
-const $ = MINI.$;
-const EE = MINI.EE;
-const HTML = MINI.HTML;
-const _ = MINI._;
+const { $, EE, HTML, _ } = MINI;
 
 const PREFIX = 'https://crossorigin.me/';
 const SYMBOL = '₡';
@@ -21,6 +18,7 @@ const entities = {
   bccr: {
     name: 'Banco Central de Costa Rica (BCCR)',
     url: 'http://www.bccr.fi.cr/Indicadores/IndicadoresJSON.ashx',
+    group: 'public',
     prefix: true,
     ready: true,
     parse: (result) => {
@@ -34,6 +32,7 @@ const entities = {
   bancredito: {
     name: 'Banco Crédito Agrícola de Cartago (Bancrédito)',
     url: 'https://www.bancreditocr.com/tipoCambio/TipoCambio.xml',
+    group: 'public',
     prefix: true,
     ready: false,
     parse: (result) => {
@@ -47,6 +46,7 @@ const entities = {
   bcr: {
     name: 'Banco de Costa Rica (BCR)',
     url: 'http://www.bancobcr.com/js/tipoCambio/BUS/actual_formato.asp?i=ES',
+    group: 'public',
     prefix: true,
     ready: true,
     parse: (result) => {
@@ -60,6 +60,7 @@ const entities = {
   bncr: {
     name: 'Banco Nacional de Costa Rica (BNCR)',
     url: 'http://www.bncr.fi.cr/BNCR/TipoCambio.aspx',
+    group: 'public',
     prefix: true,
     ready: true,
     parse: (result) => {
@@ -72,6 +73,7 @@ const entities = {
   bp: {
     name: 'Banco Popular y de Desarrollo Comunal (BP)',
     url: 'https://www.bancopopular.fi.cr/bpop/Inicio.aspx',
+    group: 'public',
     prefix: true,
     ready: true,
     parse: (result) => {
@@ -85,6 +87,7 @@ const entities = {
   bac: {
     name: 'Banco BAC San José S.A.',
     url: 'https://www.sucursalmovil.com/secm/exchangeRate.go',
+    group: 'private',
     prefix: true,
     ready: true,
     parse: (result) => {
@@ -98,6 +101,7 @@ const entities = {
   prival: {
     name: 'Banco Prival (antes Bansol)',
     url: 'https://www.prival.com/costa-rica/banca-privada/productos-servicios/canje-de-monedas',
+    group: 'private',
     prefix: true,
     ready: false,
     parse: (result) => {
@@ -192,7 +196,7 @@ const addEntities = () => {
   for (let id in entities) {
     const entity = entities[id];
     const cbId = `cb-${id}`;
-    const ready = entity['ready'];
+    const ready = entity.ready;
     const checkbox = EE('div', {
       '$': 'siimple-checkbox',
       '@title': 'Comparar',
@@ -211,13 +215,12 @@ const addEntities = () => {
       '@id': id,
       '$': 'entity siimple-btn siimple-btn--blue',
       '@style': ready ? '' : 'pointer-events:none;',
-    }, entity['name']);
+    }, entity.name);
     const message = EE('div', {
       '$': `${id} siimple-alert ${ready ? '' : 'siimple-alert--warning'}`,
     }, ready ? 'Disponible' : 'No Disponible');
-    list.push(checkbox, div, message, EE('br'));
+    $(`#${entity.group}`).addAfter([checkbox, div, message, EE('br')]);
   };
-  $('#entities').add(list);
   $('.entity').onClick(onEntityClicked);
 };
 
