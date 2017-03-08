@@ -137,7 +137,7 @@ const consts = {
 
 const getValue = (eRs, type) => {
   return EE('div', [
-    HTML(`<em>${consts[type]}: </em>`),
+    HTML(`<strong>${consts[type]}: </strong>`),
     `${SYMBOL} ${eRs[type]}`
   ]);
 };
@@ -150,14 +150,14 @@ const removeAndAddSibling = (id, element) => {
 const showResult = (id, entity, result) => {
   const eRs = entity.parse(result);
   const div = EE('div', {
-    '$': `${id} siimple-alert siimple-alert--done`
+    '$': `${id} half siimple-alert`
   }, [
     getValue(eRs, 'buy'),
     getValue(eRs, 'sell'),
     getValue(eRs, 'avg'),
   ]);
   const now = EE('div', {
-    '$': 'siimple-label'
+    '$': `${id} siimple-label`
   }, [HTML('&nbsp;&nbsp;&nbsp;'), (new Date()).toLocaleTimeString()]);
   removeAndAddSibling(id, [now, div]);
 };
@@ -171,7 +171,7 @@ const showError = (id, status, statusText, responseText) => {
 
 const showSpinner = (id) => {
   const spinner = EE('div', {
-    '$': `${id} siimple-alert`,
+    '$': `${id} half siimple-alert`,
   }, [EE('span', 'Consultando...'), HTML('&nbsp;&nbsp;&nbsp;'), EE('span', {
     '$': `${id} spinner`
   })]);
@@ -228,10 +228,7 @@ const addEntities = () => {
       '@id': id,
       '$': `entity siimple-btn ${ready? 'siimple-btn--blue' : 'siimple-btn--disabled' }`,
     }, entity.name);
-    const message = EE('div', {
-      '$': `${id} siimple-alert ${ready ? '' : 'siimple-alert--warning'}`,
-    }, ready ? 'Disponible' : 'No Disponible');
-    $(`#${entity.group}`).addAfter([checkbox, div, message, EE('br')]);
+    $(`#${entity.group}`).addAfter([checkbox, div, EE('br'), EE('br')]);
   });
   $('.entity').onClick(onEntityClicked);
 };
