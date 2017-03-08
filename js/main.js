@@ -1,5 +1,10 @@
 const MINI = require('minified');
-const { $, EE, HTML, _ } = MINI;
+const {
+  $,
+  EE,
+  HTML,
+  _
+} = MINI;
 
 const PREFIX = 'https://crossorigin.me/';
 const SYMBOL = '₡';
@@ -151,7 +156,10 @@ const showResult = (id, entity, result) => {
     getValue(eRs, 'sell'),
     getValue(eRs, 'avg'),
   ]);
-  removeAndAddSibling(id, div);
+  const now = EE('div', {
+    '$': 'siimple-label'
+  }, [HTML('&nbsp;&nbsp;&nbsp;'), (new Date()).toLocaleTimeString()]);
+  removeAndAddSibling(id, [now, div]);
 };
 
 const showError = (id, status, statusText, responseText) => {
@@ -218,8 +226,7 @@ const addEntities = () => {
     ]);
     const div = EE('div', {
       '@id': id,
-      '$': 'entity siimple-btn siimple-btn--blue',
-      '@style': ready ? '' : 'pointer-events:none;',
+      '$': `entity siimple-btn ${ready? 'siimple-btn--blue' : 'siimple-btn--disabled' }`,
     }, entity.name);
     const message = EE('div', {
       '$': `${id} siimple-alert ${ready ? '' : 'siimple-alert--warning'}`,
@@ -229,7 +236,7 @@ const addEntities = () => {
   $('.entity').onClick(onEntityClicked);
 };
 
-const onClickAll = () => {
+const onQueryAllClicked = () => {
   for (let id in entities) {
     if (entities[id].ready) {
       const entity = $(`#${id}`);
@@ -241,5 +248,5 @@ const onClickAll = () => {
 $(() => {
   addGroups();
   addEntities();
-  $('#click-all').onClick(onClickAll);
+  $('#query-all').onClick(onQueryAllClicked);
 });
