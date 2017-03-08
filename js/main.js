@@ -4,9 +4,14 @@ const { $, EE, HTML, _ } = MINI;
 const PREFIX = 'https://crossorigin.me/';
 const SYMBOL = '₡';
 
+const format = (val) => (
+  _.formatValue('#.00', parseFloat(val.replace(',', '.')))
+);
+
 const cleanData = (buy, sell) => ({
-  buy: _.formatValue('#.00', parseFloat(buy.replace(',', '.'))),
-  sell: _.formatValue('#.00', parseFloat(sell.replace(',', '.'))),
+  buy: format(buy),
+  sell: format(sell),
+  avg: _.formatValue('#.00', (parseFloat(buy.replace(',', '.')) + parseFloat(sell.replace(',', '.'))) / 2),
 });
 
 const groups = {
@@ -115,20 +120,15 @@ const entities = {
   },
 };
 
-const trans = {
-  en: {
-    buy: 'Buy',
-    sell: 'Sell'
-  },
-  es: {
-    buy: 'Compra',
-    sell: 'Venta'
-  }
+const consts = {
+  buy: 'Compra',
+  sell: 'Venta',
+  avg: 'Promedio'
 };
 
-const getTranslation = (eRs, locale, type) => {
+const getValue = (eRs, type) => {
   return EE('div', [
-    HTML(`<strong>${trans[locale][type]}: </strong>`),
+    HTML(`<em>${consts[type]}: </em>`),
     `${SYMBOL} ${eRs[type]}`
   ]);
 };
@@ -143,8 +143,9 @@ const showResult = (id, entity, result) => {
   const div = EE('div', {
     '$': `${id} siimple-alert siimple-alert--done`
   }, [
-    getTranslation(eRs, 'es', 'buy'),
-    getTranslation(eRs, 'es', 'sell'),
+    getValue(eRs, 'buy'),
+    getValue(eRs, 'sell'),
+    getValue(eRs, 'avg'),
   ]);
   removeAndAddSibling(id, div);
 };
@@ -193,7 +194,7 @@ const addGroups = () => {
 
 const addEntities = () => {
   const list = [];
-  for (let id in entities) {
+  Object.keys(entities).reverse().forEach((id) => {
     const entity = entities[id];
     const cbId = `cb-${id}`;
     const ready = entity.ready;
@@ -220,7 +221,7 @@ const addEntities = () => {
       '$': `${id} siimple-alert ${ready ? '' : 'siimple-alert--warning'}`,
     }, ready ? 'Disponible' : 'No Disponible');
     $(`#${entity.group}`).addAfter([checkbox, div, message, EE('br')]);
-  };
+  });
   $('.entity').onClick(onEntityClicked);
 };
 
