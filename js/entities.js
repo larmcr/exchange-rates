@@ -70,7 +70,7 @@ const entities = {
   },
   bac: {
     name: 'Banco BAC San José S.A.',
-    url: 'http://www.sucursalmovil.com/secm/exchangeRate.go',
+    url: 'https://www.sucursalmovil.com/secm/exchangeRate.go',
     prefix: true,
     ready: true,
     parse: (result) => {
@@ -79,6 +79,20 @@ const entities = {
       const buy = rates[1].innerText;
       const sell = rates[2].innerText;
       return cleanData(buy, sell);
+    }
+  },
+  prival: {
+    name: 'Banco Prival (antes Bansol)',
+    url: 'https://www.prival.com/costa-rica/banca-privada/productos-servicios/canje-de-monedas',
+    prefix: true,
+    ready: false,
+    parse: (result) => {
+      // const html = HTML(result);
+      // const rates = html.select('div');
+      // console.info(rates);
+      // const buy = rates[1].innerText;
+      // const sell = rates[2].innerText;
+      // return cleanData(buy, sell);
     }
   },
 };
