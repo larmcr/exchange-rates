@@ -139,7 +139,7 @@ const removeAndAddSibling = (id, element) => {
 };
 
 const showResult = (id, entity, result) => {
-  const eRs = entity['parse'](result);
+  const eRs = entity.parse(result);
   const div = EE('div', {
     '$': `${id} siimple-alert siimple-alert--done`
   }, [
@@ -168,7 +168,7 @@ const showSpinner = (id) => {
 const showExchangeRates = (id) => {
   showSpinner(id);
   const entity = entities[id];
-  const url = entity['prefix'] ? `${PREFIX}${entity.url}` : entity.url;
+  const url = entity.prefix ? `${PREFIX}${entity.url}` : entity.url;
   $.request('get', url)
     .then((result) => showResult(id, entity, result))
     .error((status, statusText, responseText) => showError(id, status, statusText, responseText));
