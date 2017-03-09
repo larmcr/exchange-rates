@@ -136,7 +136,9 @@ const consts = {
 };
 
 const getValue = (eRs, type) => {
-  return EE('div', [
+  return EE('p', {
+    '$': 'c-paragraph'
+  }, [
     HTML(`<strong>${consts[type]}: </strong>`),
     `${SYMBOL} ${eRs[type]}`
   ]);
@@ -150,21 +152,23 @@ const removeAndAddSibling = (id, element) => {
 const showResult = (id, entity, result) => {
   const eRs = entity.parse(result);
   const div = EE('div', {
-    '$': `${id} half siimple-alert`
+    '$': `${id} half c-card`
+  }, EE('div', {
+    '$': 'c-card__item'
   }, [
     getValue(eRs, 'buy'),
     getValue(eRs, 'sell'),
     getValue(eRs, 'avg'),
-  ]);
-  const now = EE('div', {
-    '$': `${id} siimple-label`
-  }, [HTML('&nbsp;&nbsp;&nbsp;'), (new Date()).toLocaleTimeString()]);
-  removeAndAddSibling(id, [now, div]);
+  ]));
+  const now = EE('span', {
+    '$': `${id} c-badge c-badge--ghost c-badge--success`
+  }, [(new Date()).toLocaleTimeString()]);
+  removeAndAddSibling(id, [HTML('&nbsp;&nbsp;&nbsp;'), now, div]);
 };
 
 const showError = (id, status, statusText, responseText) => {
   const div = EE('div', {
-    '$': `${id} siimple-alert siimple-alert--error`
+    '$': `${id} c-alert c-alert--error`
   }, 'Error al obtener información de la entidad');
   removeAndAddSibling(id, div);
 };
@@ -195,9 +199,9 @@ const onEntityClicked = (event) => {
 const addGroups = () => {
   const list = [];
   for (let id in groups) {
-    const dom = EE('div', {
+    const dom = EE('h2', {
       '@id': id,
-      '$': 'siimple-h4',
+      '$': 'c-heading',
     }, groups[id]);
     list.push(dom);
   };
@@ -210,23 +214,23 @@ const addEntities = () => {
     const entity = entities[id];
     const cbId = `cb-${id}`;
     const ready = entity.ready;
-    const checkbox = EE('div', {
-      '$': 'siimple-checkbox',
-      '@title': 'Comparar',
-      '@style': ready ? '' : 'pointer-events:none;',
+    const checkbox = EE('label', {
+      '$': 'c-toggle c-toggle--warning',
     }, [
       EE('input', {
         '@type': 'checkbox',
         '@value': id,
         '@id': cbId
       }),
-      EE('label', {
-        '@for': cbId
-      }),
+      EE('div', {
+        '$': 'c-toggle__track'
+      }, EE('div', {
+        '$': 'c-toggle__handle'
+      }))
     ]);
-    const div = EE('div', {
+    const div = EE('button', {
       '@id': id,
-      '$': `entity siimple-btn ${ready? 'siimple-btn--blue' : 'siimple-btn--disabled' }`,
+      '$': `entity c-button ${ready? 'c-button--info' : 'disabled' }`,
     }, entity.name);
     $(`#${entity.group}`).addAfter([checkbox, div, EE('br'), EE('br')]);
   });

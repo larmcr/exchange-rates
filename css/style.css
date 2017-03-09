@@ -7,6 +7,10 @@ body {
   width: 50%;
 }
 
+.disabled {
+  cursor: not-allowed!important
+}
+
 @keyframes spinner {
   to {
     transform: rotate(360deg);
