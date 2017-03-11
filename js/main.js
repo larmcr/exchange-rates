@@ -199,11 +199,14 @@ const onEntityClicked = (event) => {
 const addGroups = () => {
   const list = [];
   for (let id in groups) {
-    const dom = EE('h2', {
+    const group = groups[id];
+    const checkbox = EE('input', { '@id': `accordion-${id}`, '@type': 'checkbox' });
+    const label = EE('label', { '$': 'c-card__item', '@for': `accordion-${id}` }, group);
+    const div = EE('div', {
       '@id': id,
-      '$': 'c-heading',
-    }, groups[id]);
-    list.push(dom);
+      '$': 'c-card__item',
+    });
+    list.push([checkbox, label, div]);
   };
   $('#groups').add(list);
 };
@@ -232,7 +235,7 @@ const addEntities = () => {
       '@id': id,
       '$': `entity c-button ${ready? 'c-button--info' : 'disabled' }`,
     }, entity.name);
-    $(`#${entity.group}`).addAfter([checkbox, div, EE('br'), EE('br')]);
+    $(`#${entity.group}`).add([checkbox, div, EE('br'), EE('br')]);
   });
   $('.entity').onClick(onEntityClicked);
 };
