@@ -175,7 +175,7 @@ const showError = (id, status, statusText, responseText) => {
 
 const showSpinner = (id) => {
   const spinner = EE('div', {
-    '$': `${id} half siimple-alert`,
+    '$': `${id} half c-alert c-alert--success`,
   }, [EE('span', 'Consultando...'), HTML('&nbsp;&nbsp;&nbsp;'), EE('span', {
     '$': `${id} spinner`
   })]);
