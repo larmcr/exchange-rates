@@ -24,9 +24,9 @@ body {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  border: 5px solid #ebf2fa;
-  border-top-color: #1add9f;
-  border-right-color: #b490f5;
-  border-bottom-color: #ff8463;
+  border: 5px solid #96a8b2;
+  border-top-color: #2196f3;
+  border-right-color: #ff9800;
+  border-bottom-color: #4caf50;
   animation: spinner .5s linear infinite;
 }

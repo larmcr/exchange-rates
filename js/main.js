@@ -213,18 +213,20 @@ const addGroups = () => {
 
 const addEntities = () => {
   const list = [];
-  Object.keys(entities).reverse().forEach((id) => {
+  for (let id in entities) {
     const entity = entities[id];
     const cbId = `cb-${id}`;
     const ready = entity.ready;
+    const checkboxAttributes = {
+      '@type': 'checkbox',
+      '@value': id,
+      '@id': cbId,
+    };
+    if (!ready) checkboxAttributes['@disabled'] = '';
     const checkbox = EE('label', {
       '$': 'c-toggle c-toggle--warning',
     }, [
-      EE('input', {
-        '@type': 'checkbox',
-        '@value': id,
-        '@id': cbId
-      }),
+      EE('input', checkboxAttributes),
       EE('div', {
         '$': 'c-toggle__track'
       }, EE('div', {
@@ -236,7 +238,7 @@ const addEntities = () => {
       '$': `entity c-button ${ready? 'c-button--info' : 'disabled' }`,
     }, entity.name);
     $(`#${entity.group}`).add([checkbox, div, EE('br'), EE('br')]);
-  });
+  };
   $('.entity').onClick(onEntityClicked);
 };
 
