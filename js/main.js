@@ -188,23 +188,21 @@ const addGroups = () => {
 
 const addEntities = () => {
   const list = [];
-  for (let id in entities) {
+  Object.keys(entities).reverse().forEach ((id) => {
     const entity = entities[id];
     const ready = entity.ready;
-    const buttonAttributes = {
+    const attributes = {
       '@id': id,
       '$': 'entity pseudo',
     };
-    if (!ready) {
-      buttonAttributes['@disabled'] = '';
-    }
-    const button = EE('button', buttonAttributes, entity.name);
+    if (!ready) attributes['@disabled'] = '';
+    const button = EE('button', attributes, entity.name);
     $(`#${entity.group}`).addAfter(EE('tr', {
       '@id': `tr-${id}`
     }, [EE('td', {
       '@id': `td-${id}`
     }), EE('td', button)]));
-  };
+  });
   $('.entity').onClick(onEntityClicked);
 };
 
