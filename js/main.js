@@ -140,30 +140,32 @@ const getValue = (eRs, type) => {
     '$': 'c-paragraph'
   }, [
     HTML(`<strong>${consts[type]}: </strong>`),
-    `${SYMBOL} ${eRs[type]}`
+
   ]);
 };
 
-const removeAndAddSibling = (id, element) => {
+const removeAndAddChildren = (id, children) => {
   $(`.${id}`).remove();
-  $(`#${id}`).addAfter(element);
+  $(`#${id}`).add(children);
 };
 
 const showResult = (id, entity, result) => {
   const eRs = entity.parse(result);
-  const div = EE('div', {
-    '$': `${id} half c-card`
-  }, EE('div', {
-    '$': 'c-card__item'
-  }, [
-    getValue(eRs, 'buy'),
-    getValue(eRs, 'sell'),
-    getValue(eRs, 'avg'),
-  ]));
-  const now = EE('span', {
-    '$': `${id} c-badge c-badge--ghost c-badge--success`
-  }, [(new Date()).toLocaleTimeString()]);
-  removeAndAddSibling(id, [HTML('&nbsp;&nbsp;&nbsp;'), now, div]);
+  const cssClass = { '$' : `tr-${id}` };
+  removeAndAddChildren(`tr-${id}`, [EE('td', cssClass, `${SYMBOL} ${eRs.buy}`), EE('td', cssClass, `${SYMBOL} ${eRs.sell}`)]);
+  // const div = EE('div', {
+  //   '$': `${id} half c-card`
+  // }, EE('div', {
+  //   '$': 'c-card__item'
+  // }, [
+  //   getValue(eRs, 'buy'),
+  //   getValue(eRs, 'sell'),
+  //   getValue(eRs, 'avg'),
+  // ]));
+  // const now = EE('span', {
+  //   '$': `${id} c-badge c-badge--ghost c-badge--success`
+  // }, [(new Date()).toLocaleTimeString()]);
+  // removeAndAddSibling(id, [HTML('&nbsp;&nbsp;&nbsp;'), now, div]);
 };
 
 const showError = (id, status, statusText, responseText) => {
@@ -183,7 +185,7 @@ const showSpinner = (id) => {
 }
 
 const showExchangeRates = (id) => {
-  showSpinner(id);
+  // showSpinner(id);
   const entity = entities[id];
   const url = entity.prefix ? `${PREFIX}${entity.url}` : entity.url;
   $.request('get', url)
@@ -200,7 +202,9 @@ const addGroups = () => {
   const list = [];
   for (let id in groups) {
     const group = groups[id];
-    const tr = EE('tr', { '@id': `${id}` }, EE('td', EE('strong', group)));
+    const tr = EE('tr', {
+      '@id': `${id}`
+    }, EE('td', EE('strong', group)));
     list.push(tr);
   };
   $('tbody').add(list);
@@ -219,7 +223,9 @@ const addEntities = () => {
       buttonAttributes['@disabled'] = '';
     }
     const button = EE('button', buttonAttributes, entity.name);
-    $(`#${entity.group}`).addAfter(EE('tr', { '@id': `tr-${id}` }, [EE('td'), EE('td', button)]));
+    $(`#${entity.group}`).addAfter(EE('tr', {
+      '@id': `tr-${id}`
+    }, [EE('td'), EE('td', button)]));
   };
   $('.entity').onClick(onEntityClicked);
 };
