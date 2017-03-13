@@ -129,21 +129,6 @@ const entities = {
   },
 };
 
-const consts = {
-  buy: 'Compra',
-  sell: 'Venta',
-  avg: 'Promedio'
-};
-
-const getValue = (eRs, type) => {
-  return EE('p', {
-    '$': 'c-paragraph'
-  }, [
-    HTML(`<strong>${consts[type]}: </strong>`),
-
-  ]);
-};
-
 const removeAndAddChildren = (id, children) => {
   $(`.${id}`).remove();
   $(`#${id}`).add(children);
@@ -151,21 +136,10 @@ const removeAndAddChildren = (id, children) => {
 
 const showResult = (id, entity, result) => {
   const eRs = entity.parse(result);
-  const cssClass = { '$' : `tr-${id}` };
+  const cssClass = {
+    '$': `tr-${id}`
+  };
   removeAndAddChildren(`tr-${id}`, [EE('td', cssClass, `${SYMBOL} ${eRs.buy}`), EE('td', cssClass, `${SYMBOL} ${eRs.sell}`)]);
-  // const div = EE('div', {
-  //   '$': `${id} half c-card`
-  // }, EE('div', {
-  //   '$': 'c-card__item'
-  // }, [
-  //   getValue(eRs, 'buy'),
-  //   getValue(eRs, 'sell'),
-  //   getValue(eRs, 'avg'),
-  // ]));
-  // const now = EE('span', {
-  //   '$': `${id} c-badge c-badge--ghost c-badge--success`
-  // }, [(new Date()).toLocaleTimeString()]);
-  // removeAndAddSibling(id, [HTML('&nbsp;&nbsp;&nbsp;'), now, div]);
 };
 
 const showError = (id, status, statusText, responseText) => {
@@ -177,15 +151,13 @@ const showError = (id, status, statusText, responseText) => {
 
 const showSpinner = (id) => {
   const spinner = EE('div', {
-    '$': `${id} half c-alert c-alert--success`,
-  }, [EE('span', 'Consultando...'), HTML('&nbsp;&nbsp;&nbsp;'), EE('span', {
-    '$': `${id} spinner`
-  })]);
-  removeAndAddSibling(id, spinner);
+    '$': `tr-${id} spinner`
+  });
+  $(`#td-${id}`).add(spinner);
 }
 
 const showExchangeRates = (id) => {
-  // showSpinner(id);
+  showSpinner(id);
   const entity = entities[id];
   const url = entity.prefix ? `${PREFIX}${entity.url}` : entity.url;
   $.request('get', url)
@@ -225,7 +197,9 @@ const addEntities = () => {
     const button = EE('button', buttonAttributes, entity.name);
     $(`#${entity.group}`).addAfter(EE('tr', {
       '@id': `tr-${id}`
-    }, [EE('td'), EE('td', button)]));
+    }, [EE('td', {
+      '@id': `td-${id}`
+    }), EE('td', button)]));
   };
   $('.entity').onClick(onEntityClicked);
 };
