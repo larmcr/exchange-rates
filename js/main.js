@@ -150,9 +150,7 @@ const showError = (id, status, statusText, responseText) => {
 };
 
 const showSpinner = (id) => {
-  const spinner = EE('div', {
-    '$': `tr-${id} spinner`
-  });
+  const spinner = EE('div', { '$': `tr-${id} spinner` });
   $(`#td-${id}`).add(spinner);
 }
 
@@ -189,7 +187,7 @@ const addEntities = () => {
     const ready = entity.ready;
     const buttonAttributes = {
       '@id': id,
-      '$': 'entity',
+      '$': 'entity pseudo',
     };
     if (!ready) {
       buttonAttributes['@disabled'] = '';
