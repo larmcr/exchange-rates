@@ -200,42 +200,26 @@ const addGroups = () => {
   const list = [];
   for (let id in groups) {
     const group = groups[id];
-    const tab = EE('input', { '@id': `tab-${id}`, '@type': 'radio' });
-    const label = EE('label', { '$': 'pseudo button toggle', '@for': `tab-${id}` }, group);
-    // const div = EE('div', {
-    //   '@id': id,
-    //   '$': 'c-card__item',
-    // });
-    list.push([tab, label]);
+    const tr = EE('tr', { '@id': `${id}` }, EE('td', EE('strong', group)));
+    list.push(tr);
   };
-  $('#groups').add(list);
+  $('tbody').add(list);
 };
 
 const addEntities = () => {
   const list = [];
   for (let id in entities) {
     const entity = entities[id];
-    const cbId = `cb-${id}`;
     const ready = entity.ready;
-    const checkboxAttributes = {
-      '@type': 'checkbox',
-      '@value': id,
-      '@id': cbId,
-    };
     const buttonAttributes = {
       '@id': id,
       '$': 'entity',
     };
     if (!ready) {
-      checkboxAttributes['@disabled'] = '';
       buttonAttributes['@disabled'] = '';
     }
-    const checkbox = EE('label', [
-      EE('input', checkboxAttributes),
-      EE('span', { '$': 'checkable' }),
-    ]);
     const button = EE('button', buttonAttributes, entity.name);
-    $(`#${entity.group}`).add([checkbox, button, EE('br'), EE('br')]);
+    $(`#${entity.group}`).addAfter(EE('tr', { '@id': `tr-${id}` }, [EE('td'), EE('td', button)]));
   };
   $('.entity').onClick(onEntityClicked);
 };
