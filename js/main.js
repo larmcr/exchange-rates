@@ -140,16 +140,16 @@ const showResult = (id, entity, result) => {
     '$': `tr-${id}`
   };
   removeAndAddChildren(`tr-${id}`, [EE('td', cssClass, `${SYMBOL} ${eRs.buy}`), EE('td', cssClass, `${SYMBOL} ${eRs.sell}`)]);
+  $(`#td-${id}`).add(EE('label', { '$': `tr-${id} label success` }, (new Date).toLocaleString()));
 };
 
 const showError = (id, status, statusText, responseText) => {
-  const div = EE('div', {
-    '$': `${id} c-alert c-alert--error`
-  }, 'Error al obtener información de la entidad');
-  removeAndAddSibling(id, div);
+  $(`.tr-${id}`).remove();
+  $(`#td-${id}`).add(EE('label', { '$': `tr-${id} label error` }, 'Error al consultar'));
 };
 
 const showSpinner = (id) => {
+  $(`.tr-${id}`).remove();
   const spinner = EE('div', { '$': `tr-${id} spinner` });
   $(`#td-${id}`).add(spinner);
 }
