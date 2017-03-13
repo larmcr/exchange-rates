@@ -200,13 +200,13 @@ const addGroups = () => {
   const list = [];
   for (let id in groups) {
     const group = groups[id];
-    const checkbox = EE('input', { '@id': `accordion-${id}`, '@type': 'checkbox' });
-    const label = EE('label', { '$': 'c-card__item', '@for': `accordion-${id}` }, group);
-    const div = EE('div', {
-      '@id': id,
-      '$': 'c-card__item',
-    });
-    list.push([checkbox, label, div]);
+    const tab = EE('input', { '@id': `tab-${id}`, '@type': 'radio' });
+    const label = EE('label', { '$': 'pseudo button toggle', '@for': `tab-${id}` }, group);
+    // const div = EE('div', {
+    //   '@id': id,
+    //   '$': 'c-card__item',
+    // });
+    list.push([tab, label]);
   };
   $('#groups').add(list);
 };
@@ -222,22 +222,20 @@ const addEntities = () => {
       '@value': id,
       '@id': cbId,
     };
-    if (!ready) checkboxAttributes['@disabled'] = '';
-    const checkbox = EE('label', {
-      '$': 'c-toggle c-toggle--warning',
-    }, [
-      EE('input', checkboxAttributes),
-      EE('div', {
-        '$': 'c-toggle__track'
-      }, EE('div', {
-        '$': 'c-toggle__handle'
-      }))
-    ]);
-    const div = EE('button', {
+    const buttonAttributes = {
       '@id': id,
-      '$': `entity c-button ${ready? 'c-button--info' : 'disabled' }`,
-    }, entity.name);
-    $(`#${entity.group}`).add([checkbox, div, EE('br'), EE('br')]);
+      '$': 'entity',
+    };
+    if (!ready) {
+      checkboxAttributes['@disabled'] = '';
+      buttonAttributes['@disabled'] = '';
+    }
+    const checkbox = EE('label', [
+      EE('input', checkboxAttributes),
+      EE('span', { '$': 'checkable' }),
+    ]);
+    const button = EE('button', buttonAttributes, entity.name);
+    $(`#${entity.group}`).add([checkbox, button, EE('br'), EE('br')]);
   };
   $('.entity').onClick(onEntityClicked);
 };
