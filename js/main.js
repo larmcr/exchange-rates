@@ -26,7 +26,7 @@ const cleanData = (buy, sell) => {
 const groups = {
   public: 'Bancos públicos',
   private: 'Bancos privados',
-  finances: 'Financieras',
+  finance: 'Financieras',
 };
 
 const entities = {
@@ -222,7 +222,7 @@ const entities = {
     }
   },
   scotiabank: {
-    name: 'Banco Scotiabank de Costa Rica S.A.	',
+    name: 'Banco Scotiabank de Costa Rica S.A.',
     url: 'http://www.scotiabankcr.com/Personas/Default.aspx',
     group: 'private',
     prefix: true,
@@ -236,7 +236,7 @@ const entities = {
     }
   },
   prival: {
-    name: 'Banco Prival (antes Bansol)',
+    name: 'Prival Bank (Costa Rica) S.A.',
     url: 'https://www.prival.com/costa-rica/banca-privada/productos-servicios/canje-de-monedas',
     group: 'private',
     prefix: true,
@@ -248,6 +248,34 @@ const entities = {
       // const buy = rates[1].innerText;
       // const sell = rates[2].innerText;
       // return cleanData(buy, sell);
+    }
+  },
+  cafsa: {
+    name: 'Financiera Cafsa S.A.',
+    url: 'http://www.scotiabankcr.com/Personas/Default.aspx',
+    group: 'finance',
+    prefix: true,
+    ready: false,
+    parse: (result) => {
+      const html = HTML(result);
+      const rates = html.select('span');
+      const buy = rates[155].innerText.substr(1);
+      const sell = rates[157].innerText.substr(1);
+      return cleanData(buy, sell);
+    }
+  },
+  comeca: {
+    name: 'Financiera Comeca S.A.',
+    url: 'http://www.fincomeca.fi.cr/',
+    group: 'finance',
+    prefix: true,
+    ready: true,
+    parse: (result) => {
+      const html = HTML(result);
+      const rates = html.select('.smallGrey');
+      const buy = rates[0].innerText.split(' ')[2];
+      const sell = rates[1].innerText.split(' ')[2];
+      return cleanData(buy, sell);
     }
   },
 };
