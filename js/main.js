@@ -206,6 +206,21 @@ const entities = {
       return cleanData(buy, sell);
     }
   },
+  promerica: {
+    name: 'Banco Promérica S.A.',
+    url: 'https://www.promerica.fi.cr/site/index.aspx',
+    group: 'private',
+    prefix: true,
+    ready: true,
+    parse: (result) => {
+      const html = HTML(result);
+      const rates = html.select('span');
+      console.info(rates);
+      const buy = rates[0].innerText;
+      const sell = rates[1].innerText;
+      return cleanData(buy, sell);
+    }
+  },
   prival: {
     name: 'Banco Prival (antes Bansol)',
     url: 'https://www.prival.com/costa-rica/banca-privada/productos-servicios/canje-de-monedas',
@@ -293,7 +308,7 @@ const addEntities = () => {
     };
     if (!ready) attributes['@disabled'] = '';
     const message = EE('label', {
-      '$': `tr-${id} label ${ready ? 'success' : 'warning'}`
+      '$': `tr-${id} label ${ready ? '' : 'warning'}`
     }, `${ready ? 'Disponible' : 'No disponible'}`);
     const button = EE('button', attributes, entity.name);
     const tr = EE('tr', {
