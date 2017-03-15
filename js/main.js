@@ -167,6 +167,20 @@ const entities = {
       return cleanData(buy, sell);
     }
   },
+  improsa: {
+    name: 'Banco Improsa S.A.',
+    url: 'https://www.grupoimprosa.com/banco',
+    group: 'private',
+    prefix: true,
+    ready: true,
+    parse: (result) => {
+      const html = HTML(result);
+      const rates = html.select('span');
+      const buy = rates[70].innerText;
+      const sell = rates[74].innerText;
+      return cleanData(buy, sell);
+    }
+  },
   prival: {
     name: 'Banco Prival (antes Bansol)',
     url: 'https://www.prival.com/costa-rica/banca-privada/productos-servicios/canje-de-monedas',
