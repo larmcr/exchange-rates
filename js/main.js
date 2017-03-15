@@ -114,7 +114,7 @@ const entities = {
   },
   bct: {
     name: 'Banco BCT S.A.',
-    url: 'http://www.bancobct.com/',
+    url: 'http://www.bancobct.com',
     group: 'private',
     prefix: true,
     ready: true,
@@ -123,6 +123,19 @@ const entities = {
       const rates = html.select('table').select('td');
       const buy = rates[1].innerText.split(' ')[1];
       const sell = rates[3].innerText.split(' ')[1];
+      return cleanData(buy, sell);
+    }
+  },
+  cathay: {
+    name: 'Banco Cathay de Costa Rica S.A.',
+    url: 'https://www.bancocathay.com',
+    group: 'private',
+    prefix: true,
+    ready: true,
+    parse: (result) => {
+      const html = HTML(result);
+      const buy = html.select('#lblCompra')[0].innerText.substr(1);
+      const sell = html.select('#lblVenta')[0].innerText.substr(1);
       return cleanData(buy, sell);
     }
   },
