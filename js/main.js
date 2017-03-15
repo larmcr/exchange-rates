@@ -139,6 +139,20 @@ const entities = {
       return cleanData(buy, sell);
     }
   },
+  davivienda: {
+    name: 'Banco Davivienda (Costa Rica) S.A',
+    url: 'http://www.davivienda.cr/',
+    group: 'private',
+    prefix: true,
+    ready: true,
+    parse: (result) => {
+      const html = HTML(result);
+      const rates = html.select('#tipo_cambio').select('span');
+      const buy = rates[2].innerText.trim();
+      const sell = rates[3].innerText.trim();
+      return cleanData(buy, sell);
+    }
+  },
   prival: {
     name: 'Banco Prival (antes Bansol)',
     url: 'https://www.prival.com/costa-rica/banca-privada/productos-servicios/canje-de-monedas',
@@ -207,7 +221,7 @@ const addGroups = () => {
     const group = groups[id];
     const tr = EE('tr', {
       '@id': `${id}`
-    }, EE('td', EE('strong', group)));
+    }, EE('td', EE('em', EE('strong', group))));
     list.push(tr);
   };
   $('tbody').add(list);
