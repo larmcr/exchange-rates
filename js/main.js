@@ -26,6 +26,7 @@ const cleanData = (buy, sell) => {
 const groups = {
   public: 'Bancos públicos',
   private: 'Bancos privados',
+  finances: 'Financieras',
 };
 
 const entities = {
@@ -215,9 +216,22 @@ const entities = {
     parse: (result) => {
       const html = HTML(result);
       const rates = html.select('span');
-      console.info(rates);
       const buy = rates[0].innerText;
       const sell = rates[1].innerText;
+      return cleanData(buy, sell);
+    }
+  },
+  scotiabank: {
+    name: 'Banco Scotiabank de Costa Rica S.A.	',
+    url: 'http://www.scotiabankcr.com/Personas/Default.aspx',
+    group: 'private',
+    prefix: true,
+    ready: true,
+    parse: (result) => {
+      const html = HTML(result);
+      const rates = html.select('span');
+      const buy = rates[155].innerText.substr(1);
+      const sell = rates[157].innerText.substr(1);
       return cleanData(buy, sell);
     }
   },
