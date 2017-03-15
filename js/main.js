@@ -140,8 +140,8 @@ const entities = {
     }
   },
   davivienda: {
-    name: 'Banco Davivienda (Costa Rica) S.A',
-    url: 'http://www.davivienda.cr/',
+    name: 'Banco Davivienda (Costa Rica) S.A.',
+    url: 'http://www.davivienda.cr',
     group: 'private',
     prefix: true,
     ready: true,
@@ -150,6 +150,20 @@ const entities = {
       const rates = html.select('#tipo_cambio').select('span');
       const buy = rates[2].innerText.trim();
       const sell = rates[3].innerText.trim();
+      return cleanData(buy, sell);
+    }
+  },
+  general: {
+    name: 'Banco General (Costa Rica) S.A.',
+    url: 'https://www.bgeneral.fi.cr/bgespanol/personal/index.asp',
+    group: 'private',
+    prefix: true,
+    ready: true,
+    parse: (result) => {
+      const html = HTML(result);
+      const rates = html.select('td');
+      const buy = rates[14].innerText.substr(1).trim();
+      const sell = rates[15].innerText.substr(1).trim();
       return cleanData(buy, sell);
     }
   },
