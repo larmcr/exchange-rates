@@ -284,7 +284,7 @@ const addGroups = () => {
 
 const addEntities = () => {
   const list = [];
-  Object.keys(entities).reverse().forEach ((id) => {
+  Object.keys(entities).reverse().forEach((id) => {
     const entity = entities[id];
     const ready = entity.ready;
     const attributes = {
@@ -292,12 +292,16 @@ const addEntities = () => {
       '$': 'entity pseudo',
     };
     if (!ready) attributes['@disabled'] = '';
+    const message = EE('label', {
+      '$': `tr-${id} label ${ready ? 'success' : 'warning'}`
+    }, `${ready ? 'Disponible' : 'No disponible'}`);
     const button = EE('button', attributes, entity.name);
-    $(`#${entity.group}`).addAfter(EE('tr', {
+    const tr = EE('tr', {
       '@id': `tr-${id}`
     }, [EE('td', {
       '@id': `td-${id}`
-    }), EE('td', button)]));
+    }, message), EE('td', button)]);
+    $(`#${entity.group}`).addAfter(tr);
   });
   $('.entity').onClick(onEntityClicked);
 };
