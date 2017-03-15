@@ -6,7 +6,7 @@ const {
   _
 } = MINI;
 
-const PREFIX = 'https://crossorigin.me/';
+const PREFIX = 'https://cors-anywhere.herokuapp.com/';
 const SYMBOL = '₡';
 
 const format = (val) => _.formatValue('#.00', val);
@@ -181,6 +181,31 @@ const entities = {
       return cleanData(buy, sell);
     }
   },
+  lafise: {
+    name: 'Banco Lafise S.A.',
+    url: 'https://www.lafise.com/DesktopModules/Servicios/API/TasaCambio/VerPorPaisActivo',
+    group: 'private',
+    prefix: true,
+    ready: true,
+    method: 'post',
+    data: {
+      Activo: true,
+      Descripcion: '',
+      IdPais: -1,
+      PathUrl: 'https://www.lafise.com/blcr',
+      SimboloCompra: '',
+      SimboloVenta: '',
+      ValorCompra: '',
+      ValorVenta: '',
+    },
+    parse: (result) => {
+      const json = $.parseJSON(result);
+      const rates = json[1];
+      const buy = rates.ValorCompra.split(' ')[1];
+      const sell = rates.ValorVenta.split(' ')[1];
+      return cleanData(buy, sell);
+    }
+  },
   prival: {
     name: 'Banco Prival (antes Bansol)',
     url: 'https://www.prival.com/costa-rica/banca-privada/productos-servicios/canje-de-monedas',
@@ -233,7 +258,9 @@ const showExchangeRates = (id) => {
   showSpinner(id);
   const entity = entities[id];
   const url = entity.prefix ? `${PREFIX}${entity.url}` : entity.url;
-  $.request('get', url)
+  const method = entity.method || 'get';
+  const data = entity.data;
+  $.request(method, url, data)
     .then((result) => showResult(id, entity, result))
     .error((status, statusText, responseText) => showError(id, status, statusText, responseText));
 };
