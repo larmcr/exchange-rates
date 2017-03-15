@@ -112,6 +112,20 @@ const entities = {
       return cleanData(buy, sell);
     }
   },
+  bct: {
+    name: 'Banco BCT S.A.',
+    url: 'http://www.bancobct.com/',
+    group: 'private',
+    prefix: true,
+    ready: true,
+    parse: (result) => {
+      const html = HTML(result);
+      const rates = html.select('table').select('td');
+      const buy = rates[1].innerText.split(' ')[1];
+      const sell = rates[3].innerText.split(' ')[1];
+      return cleanData(buy, sell);
+    }
+  },
   prival: {
     name: 'Banco Prival (antes Bansol)',
     url: 'https://www.prival.com/costa-rica/banca-privada/productos-servicios/canje-de-monedas',
