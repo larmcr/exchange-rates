@@ -27,7 +27,8 @@ const groups = {
   public: 'Bancos públicos',
   private: 'Bancos privados',
   finance: 'Financieras',
-  mutual: 'Mutuales de vivienda'
+  mutual: 'Mutuales de vivienda',
+  cooperative: 'Cooperativas',
 };
 
 const entities = {
@@ -338,6 +339,20 @@ const entities = {
       const rates = json.d.split(' ');
       const buy = rates[4].substr(1);
       const sell = rates[6].substr(1);
+      return cleanData(buy, sell);
+    }
+  },
+  ccopeande: {
+    name: 'Coope-ANDE N°1 R.L.',
+    url: 'https://online.coope-ande.co.cr/coopeande/tipocambio',
+    group: 'cooperative',
+    prefix: true,
+    ready: true,
+    parse: (result) => {
+      const html = HTML(result);
+      const rates = html.select('h1')[0].innerText.split(' ');
+      const buy = rates[3].split(':')[1];
+      const sell = rates[7];
       return cleanData(buy, sell);
     }
   },
