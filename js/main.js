@@ -52,7 +52,7 @@ const entities = {
     prefix: true,
     ready: false,
     parse: (result) => {
-      console.info(result);
+      // console.info(result);
       // const html = HTML(result);
       // const buy = $(html.select('.compra')[0]).select('span').text();
       // const sell = $(html.select('.venta')[0]).select('span').text();
@@ -317,7 +317,27 @@ const entities = {
       const html = HTML(result);
       const buy = html.select('#buyRate')[0].innerText;
       const sell = html.select('#sellRate')[0].innerText;
-      console.info(buy, sell);
+      return cleanData(buy, sell);
+    }
+  },
+  mucap: {
+    name: 'Mutual Cartago de Ahorro y Préstamo (MUCAP)',
+    url: 'http://www.mucap.fi.cr/prxs/_tipoCambio.aspx/getTipoCambio',
+    group: 'mutual',
+    prefix: true,
+    ready: true,
+    method: 'post',
+    data: '{"moneda":2}',
+    settings: {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+    },
+    parse: (result) => {
+      const json = $.parseJSON(result);
+      const rates = json.d.split(' ');
+      const buy = rates[4].substr(1);
+      const sell = rates[6].substr(1);
       return cleanData(buy, sell);
     }
   },
@@ -360,7 +380,8 @@ const showExchangeRates = (id) => {
   const url = entity.prefix ? `${PREFIX}${entity.url}` : entity.url;
   const method = entity.method || 'get';
   const data = entity.data;
-  $.request(method, url, data)
+  const settings = entity.settings;
+  $.request(method, url, data, settings)
     .then((result) => showResult(id, entity, result))
     .error((status, statusText, responseText) => showError(id, status, statusText, responseText));
 };
