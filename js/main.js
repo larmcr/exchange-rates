@@ -293,7 +293,7 @@ const showResult = (id, entity, result) => {
   removeAndAddChildren(`tr-${id}`, [EE('td', cssClass, `${SYMBOL} ${eRs.buy}`), EE('td', cssClass, `${SYMBOL} ${eRs.sell}`)]);
   $(`#td-${id}`).add(EE('small', {
     '$': `tr-${id}`
-  }, (new Date).toLocaleString()));
+  }, (new Date).toLocaleTimeString()));
 };
 
 const showError = (id, status, statusText, responseText) => {
