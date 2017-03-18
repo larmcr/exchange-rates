@@ -266,7 +266,7 @@ const entities = {
   },
   comeca: {
     name: 'Financiera Comeca S.A.',
-    url: 'http://www.fincomeca.fi.cr/',
+    url: 'http://www.fincomeca.fi.cr',
     group: 'finance',
     prefix: true,
     ready: true,
@@ -275,6 +275,20 @@ const entities = {
       const rates = html.select('.smallGrey');
       const buy = rates[0].innerText.split(' ')[2];
       const sell = rates[1].innerText.split(' ')[2];
+      return cleanData(buy, sell);
+    }
+  },
+  desyfin: {
+    name: 'Financiera Desyfin S.A.',
+    url: 'http://www.desyfin.fi.cr',
+    group: 'finance',
+    prefix: true,
+    ready: true,
+    parse: (result) => {
+      const html = HTML(result);
+      const rates = html.select('strong');
+      const buy = rates[0].innerText;
+      const sell = rates[1].innerText;
       return cleanData(buy, sell);
     }
   },
