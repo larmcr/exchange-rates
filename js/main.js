@@ -291,15 +291,15 @@ const showResult = (id, entity, result) => {
     '$': `tr-${id}`
   };
   removeAndAddChildren(`tr-${id}`, [EE('td', cssClass, `${SYMBOL} ${eRs.buy}`), EE('td', cssClass, `${SYMBOL} ${eRs.sell}`)]);
-  $(`#td-${id}`).add(EE('label', {
-    '$': `tr-${id} label success`
+  $(`#td-${id}`).add(EE('small', {
+    '$': `tr-${id}`
   }, (new Date).toLocaleString()));
 };
 
 const showError = (id, status, statusText, responseText) => {
   $(`.tr-${id}`).remove();
-  $(`#td-${id}`).add(EE('label', {
-    '$': `tr-${id} label error`
+  $(`#td-${id}`).add(EE('small', {
+    '$': `tr-${id}`
   }, 'Error al consultar'));
 };
 
@@ -333,7 +333,7 @@ const addGroups = () => {
     const group = groups[id];
     const tr = EE('tr', {
       '@id': `${id}`
-    }, EE('td', EE('em', EE('strong', group))));
+    }, EE('td', EE('em', group)));
     list.push(tr);
   };
   $('tbody').add(list);
@@ -346,11 +346,11 @@ const addEntities = () => {
     const ready = entity.ready;
     const attributes = {
       '@id': id,
-      '$': 'entity pseudo',
+      '$': 'entity button-clear',
     };
     if (!ready) attributes['@disabled'] = '';
-    const message = EE('label', {
-      '$': `tr-${id} label ${ready ? '' : 'warning'}`
+    const message = EE('small', {
+      '$': `tr-${id} ${ready ? '' : 'disabled'}`
     }, `${ready ? 'Disponible' : 'No disponible'}`);
     const button = EE('button', attributes, entity.name);
     const tr = EE('tr', {

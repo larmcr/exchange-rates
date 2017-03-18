@@ -1,13 +1,14 @@
-button {
+body {
+  background-color: #f4f5f6;
   margin-left: 1em;
 }
 
-table {
-  margin-left: 1em;
+.disabled {
+  cursor: default;
+  opacity: .5
 }
 
 .spinner {
-  margin-left: 1em;
   width: 3em;
   height: 2em;
   background: linear-gradient(#0074d9, #0074d9) 0 50%, linear-gradient(#0074d9, #0074d9) 0.625em 50%, linear-gradient(#0074d9, #0074d9) 1.25em 50%, linear-gradient(#0074d9, #0074d9) 1.875em 50%, linear-gradient(#0074d9, #0074d9) 2.5em 50%;
