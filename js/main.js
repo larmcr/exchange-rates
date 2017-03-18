@@ -27,6 +27,7 @@ const groups = {
   public: 'Bancos públicos',
   private: 'Bancos privados',
   finance: 'Financieras',
+  mutual: 'Mutuales de vivienda'
 };
 
 const entities = {
@@ -289,6 +290,34 @@ const entities = {
       const rates = html.select('strong');
       const buy = rates[0].innerText;
       const sell = rates[1].innerText;
+      return cleanData(buy, sell);
+    }
+  },
+  continental: {
+    name: 'Financiera G&T Continental Costa Rica S.A.',
+    url: 'http://www.gytcontinental.fi.cr',
+    group: 'finance',
+    prefix: true,
+    ready: false,
+    parse: (result) => {
+      // const html = HTML(result);
+      // const rates = html.select('strong');
+      // const buy = rates[0].innerText;
+      // const sell = rates[1].innerText;
+      // return cleanData(buy, sell);
+    }
+  },
+  alajuela: {
+    name: 'Grupo Mutual Alajuela - La Vivienda de Ahorro y Préstamo',
+    url: 'http://www.grupomutual.fi.cr',
+    group: 'mutual',
+    prefix: true,
+    ready: true,
+    parse: (result) => {
+      const html = HTML(result);
+      const buy = html.select('#buyRate')[0].innerText;
+      const sell = html.select('#sellRate')[0].innerText;
+      console.info(buy, sell);
       return cleanData(buy, sell);
     }
   },
