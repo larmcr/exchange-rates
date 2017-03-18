@@ -290,7 +290,7 @@ const showResult = (id, entity, result) => {
   const cssClass = {
     '$': `tr-${id}`
   };
-  removeAndAddChildren(`tr-${id}`, [EE('td', cssClass, `${SYMBOL} ${eRs.buy}`), EE('td', cssClass, `${SYMBOL} ${eRs.sell}`)]);
+  removeAndAddChildren(`tr-${id}`, [EE('td', cssClass, EE('small', `${SYMBOL} ${eRs.buy}`)), EE('td', cssClass, EE('small', `${SYMBOL} ${eRs.sell}`))]);
   $(`#td-${id}`).add(EE('small', {
     '$': `tr-${id}`
   }, (new Date).toLocaleTimeString()));
@@ -299,7 +299,7 @@ const showResult = (id, entity, result) => {
 const showError = (id, status, statusText, responseText) => {
   $(`.tr-${id}`).remove();
   $(`#td-${id}`).add(EE('small', {
-    '$': `tr-${id}`
+    '$': `tr-${id} error`
   }, 'Error al consultar'));
 };
 
@@ -346,11 +346,11 @@ const addEntities = () => {
     const ready = entity.ready;
     const attributes = {
       '@id': id,
-      '$': 'entity button-clear',
+      '$': 'entity button-clear button-small',
     };
     if (!ready) attributes['@disabled'] = '';
     const message = EE('small', {
-      '$': `tr-${id} ${ready ? '' : 'disabled'}`,
+      '$': `tr-${id} ${ready ? 'available' : 'disabled'}`,
     }, `${ready ? 'Disponible' : 'No disponible'}`);
     const button = EE('button', attributes, entity.name);
     const tr = EE('tr', {
