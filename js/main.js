@@ -306,7 +306,7 @@ const showError = (id, status, statusText, responseText) => {
 const showSpinner = (id) => {
   $(`.tr-${id}`).remove();
   const spinner = EE('div', {
-    '$': `tr-${id} spinner`
+    '$': `tr-${id} spinner-fix spinner`
   });
   $(`#td-${id}`).add(spinner);
 }
@@ -350,7 +350,7 @@ const addEntities = () => {
     };
     if (!ready) attributes['@disabled'] = '';
     const message = EE('small', {
-      '$': `tr-${id} ${ready ? '' : 'disabled'}`
+      '$': `tr-${id} ${ready ? '' : 'disabled'}`,
     }, `${ready ? 'Disponible' : 'No disponible'}`);
     const button = EE('button', attributes, entity.name);
     const tr = EE('tr', {
