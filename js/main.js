@@ -384,6 +384,20 @@ const entities = {
       return cleanData(buy, sell);
     }
   },
+  credecoop: {
+    name: 'Cooperativa CREDECOOP R.L.',
+    url: 'http://www.credecoop.fi.cr',
+    group: 'cooperative',
+    prefix: true,
+    ready: true,
+    parse: (result) => {
+      const html = HTML(result);
+      const rates = html.select('span');
+      const buy = rates[45].innerText.split(' ')[3];
+      const sell = rates[46].innerText.split(' ')[4];
+      return cleanData(buy, sell);
+    }
+  },
 };
 
 const removeAndAddChildren = (id, children) => {
