@@ -398,6 +398,20 @@ const entities = {
       return cleanData(buy, sell);
     }
   },
+  coopenae: {
+    name: 'Cooperativa Nacional de Educadores R.L. (COOPENAE)',
+    url: 'https://www.coopenae.cr/coopenae_virtual/TC.aspx',
+    group: 'cooperative',
+    prefix: true,
+    ready: true,
+    parse: (result) => {
+      const html = HTML(result);
+      const rates = html.select('#lbl_compraR')[0].innerText;
+      const buy = html.select('#lbl_compraR')[0].innerText;
+      const sell = html.select('#lbl_ventaR')[0].innerText;
+      return cleanData(buy, sell);
+    }
+  },
 };
 
 const removeAndAddChildren = (id, children) => {
