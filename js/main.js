@@ -342,7 +342,7 @@ const entities = {
       return cleanData(buy, sell);
     }
   },
-  ccopeande: {
+  coopeande: {
     name: 'Coope-ANDE N°1 R.L.',
     url: 'https://online.coope-ande.co.cr/coopeande/tipocambio',
     group: 'cooperative',
@@ -350,9 +350,37 @@ const entities = {
     ready: true,
     parse: (result) => {
       const html = HTML(result);
+      console.info(html);
       const rates = html.select('h1')[0].innerText.split(' ');
       const buy = rates[3].split(':')[1];
       const sell = rates[7];
+      return cleanData(buy, sell);
+    }
+  },
+  coocique: {
+    name: 'Cooperativa COOCIQUE R.L.',
+    url: 'https://coocique.fi.cr',
+    group: 'cooperative',
+    prefix: true,
+    ready: false,
+    parse: (result) => {
+      // const html = HTML(result);
+      // const rates = html.select('h1')[0].innerText.split(' ');
+      // const buy = rates[3].split(':')[1];
+      // const sell = rates[7];
+      // return cleanData(buy, sell);
+    }
+  },
+  coopealianza: {
+    name: 'Cooperativa Coopealianza R.L.',
+    url: 'http://www.coopealianza.fi.cr/tc/compra.html',
+    group: 'cooperative',
+    prefix: true,
+    ready: true,
+    parse: (result) => {
+      const html = HTML(result);
+      const buy = $(html[7])[0].innerText.split(' ')[5];
+      const sell = $(html[11])[0].innerText.split(' ')[5];
       return cleanData(buy, sell);
     }
   },
