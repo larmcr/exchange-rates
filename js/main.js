@@ -437,7 +437,7 @@ const showResult = (id, entity, result) => {
   const cssClass = {
     '$': `tr-${id}`
   };
-  removeAndAddChildren(`tr-${id}`, [EE('td', cssClass, EE('small', `${SYMBOL} ${eRs.buy}`)), EE('td', cssClass, EE('small', `${SYMBOL} ${eRs.sell}`))]);
+  removeAndAddChildren(`tr-${id}`, [EE('td', cssClass, EE('small', `${SYMBOL} ${eRs.buy}`)), EE('td', cssClass, EE('small', `${SYMBOL} ${eRs.sell}`)), EE('td', cssClass, EE('small', `${SYMBOL} ${eRs.avg}`))]);
   $(`#td-${id}`).add(EE('small', {
     '$': `tr-${id}`
   }, (new Date).toLocaleTimeString()));
