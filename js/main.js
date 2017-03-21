@@ -406,9 +406,22 @@ const entities = {
     ready: true,
     parse: (result) => {
       const html = HTML(result);
-      const rates = html.select('#lbl_compraR')[0].innerText;
       const buy = html.select('#lbl_compraR')[0].innerText;
       const sell = html.select('#lbl_ventaR')[0].innerText;
+      return cleanData(buy, sell);
+    }
+  },
+  marcos: {
+    name: 'Cooperativa San Marcos R.L.',
+    url: 'http://www.csm.fi.cr',
+    group: 'cooperative',
+    prefix: true,
+    ready: true,
+    parse: (result) => {
+      const html = HTML(result);
+      const rates = html.select('p');
+      const buy = rates[7].innerText.split(' ')[1].substr(1);
+      const sell = rates[8].innerText.split(' ')[1].substr(1);
       return cleanData(buy, sell);
     }
   },
