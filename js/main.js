@@ -232,8 +232,9 @@ const entities = {
     parse: (result) => {
       const html = HTML(result);
       const rates = html.select('span');
-      const buy = rates[155].innerText.substr(1);
-      const sell = rates[157].innerText.substr(1);
+      console.info(rates);
+      const buy = rates[156].innerText.substr(1);
+      const sell = rates[158].innerText.substr(1);
       return cleanData(buy, sell);
     }
   },
