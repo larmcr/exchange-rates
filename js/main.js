@@ -438,7 +438,7 @@ const showResult = (id, entity, result) => {
   const cssClass = {
     '$': `tr-${id}`
   };
-  removeAndAddChildren(`tr-${id}`, [EE('td', cssClass, EE('small', `${SYMBOL} ${eRs.buy}`)), EE('td', cssClass, EE('small', `${SYMBOL} ${eRs.sell}`)), EE('td', cssClass, EE('small', `${SYMBOL} ${eRs.avg}`))]);
+  removeAndAddChildren(`tr-${id}`, [EE('td', cssClass, EE('div', `${SYMBOL} ${eRs.buy}`)), EE('td', cssClass, EE('div', `${SYMBOL} ${eRs.sell}`)), EE('td', cssClass, EE('div', `${SYMBOL} ${eRs.avg}`))]);
   $(`#td-${id}`).add(EE('small', {
     '$': `tr-${id}`
   }, (new Date).toLocaleTimeString()));
@@ -495,13 +495,12 @@ const addEntities = () => {
     const ready = entity.ready;
     const attributes = {
       '@id': id,
-      '$': 'entity button-clear button-small',
+      '$': `entity ${!ready ? 'disabled' : ''}`,
     };
-    if (!ready) attributes['@disabled'] = '';
     const message = EE('small', {
       '$': `tr-${id} ${ready ? 'available' : 'disabled'}`,
     }, `${ready ? 'Disponible' : 'No disponible'}`);
-    const button = EE('button', attributes, entity.name);
+    const button = EE('div', attributes, entity.name);
     const tr = EE('tr', {
       '@id': `tr-${id}`
     }, [EE('td', {
@@ -509,7 +508,7 @@ const addEntities = () => {
     }, message), EE('td', button)]);
     $(`#${entity.group}`).addAfter(tr);
   });
-  $('.entity').onClick(onEntityClicked);
+  $('.entity').not('.disabled').onClick(onEntityClicked);
 };
 
 const onQueryAllClicked = () => {

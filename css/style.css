@@ -6,13 +6,20 @@ body {
   margin-right: 1em;
 }
 
-.disabled {
-  cursor: default;
-  opacity: .5
+.entity {
+  cursor: pointer;
+  color: #9b4dca;
 }
 
-.available {
-  color: #9b4dca;
+.entity:focus,
+.entity:hover {
+  cursor: pointer;
+  color: #606c76;
+}
+
+.disabled {
+  cursor: not-allowed !important;
+  opacity: .5
 }
 
 .error {
