@@ -3,12 +3,13 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://gitcdn.link/repo/Chalarangelo/mini.css/master/dist/mini-nord.min.css">
   <script src="http://minifiedjs.com/download/minified.js"></script>
 </head>
 
 <body>
-  <button id="query-all" class="button-outline">
+  <button id="query-all" class="inverse">
     Consultar todas las entidades
   </button>
   <table>
@@ -47,7 +48,7 @@
       return {
         buy: format(buyParsed),
         sell: format(sellParsed),
-        avg: format((buyParsed + sellParsed) / 2),
+        avg: format(Math.round((buyParsed + sellParsed) / 2 * 100) / 100),
       };
     };
 
@@ -468,15 +469,15 @@
       };
       removeAndAddChildren(`tr-${id}`, [EE('td', cssClass, EE('div', `${SYMBOL} ${eRs.buy}`)), EE('td', cssClass, EE(
         'div', `${SYMBOL} ${eRs.sell}`)), EE('td', cssClass, EE('div', `${SYMBOL} ${eRs.avg}`))]);
-      $(`#td-${id}`).add(EE('small', {
+      $(`#td-${id}`).add(EE('mark', {
         '$': `tr-${id}`
-      }, (new Date).toLocaleTimeString()));
+      }, (new Date).toLocaleString()));
     };
 
     const showError = (id, status, statusText, responseText) => {
       $(`.tr-${id}`).remove();
-      $(`#td-${id}`).add(EE('small', {
-        '$': `tr-${id} error`
+      $(`#td-${id}`).add(EE('mark', {
+        '$': `tr-${id} secondary`
       }, 'Error al consultar'));
     };
 
@@ -526,14 +527,15 @@
           '@id': id,
           '$': `entity small ${!ready ? 'disabled' : ''}`,
         };
-        const message = EE('small', {
+        if(!ready) attributes['@disabled'] = '';
+        const message = EE('div', {
           '$': `tr-${id} ${ready ? 'available' : 'disabled'}`,
         }, `${ready ? 'Disponible' : 'No disponible'}`);
         const button = EE('button', attributes, entity.name);
         const tr = EE('tr', {
           '@id': `tr-${id}`
         }, [EE('td', {
-          '@id': `td-${id}`
+          '@id': `td-${id}`,
         }, message), EE('td', button)]);
         $(`#${entity.group}`).addAfter(tr);
       });
