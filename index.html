@@ -65,7 +65,6 @@
         name: 'Banco Central de Costa Rica (BCCR)',
         url: 'http://www.bccr.fi.cr/Indicadores/IndicadoresJSON.ashx',
         group: 'public',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const {
@@ -79,7 +78,6 @@
         name: 'Banco Crédito Agrícola de Cartago (Bancrédito)',
         url: 'https://www.bancreditocr.com/tipoCambio/TipoCambio.xml',
         group: 'public',
-        prefix: true,
         ready: false,
         parse: (result) => {
           // console.info(result);
@@ -93,7 +91,6 @@
         name: 'Banco de Costa Rica (BCR)',
         url: 'http://www.bancobcr.com/js/tipoCambio/BUS/actual_formato.asp?i=ES',
         group: 'public',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const html = HTML(result);
@@ -107,7 +104,6 @@
         name: 'Banco Nacional de Costa Rica (BNCR)',
         url: 'http://www.bncr.fi.cr/BNCR/TipoCambio.aspx',
         group: 'public',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const html = HTML(result);
@@ -120,7 +116,6 @@
         name: 'Banco Popular y de Desarrollo Comunal (BP)',
         url: 'https://www.bancopopular.fi.cr/bpop/Inicio.aspx',
         group: 'public',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const html = HTML(result);
@@ -134,7 +129,6 @@
         name: 'Banco BAC San José S.A.',
         url: 'https://www.sucursalmovil.com/secm/exchangeRate.go',
         group: 'private',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const html = HTML(result);
@@ -148,7 +142,6 @@
         name: 'Banco BCT S.A.',
         url: 'http://www.bancobct.com',
         group: 'private',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const html = HTML(result);
@@ -162,7 +155,6 @@
         name: 'Banco Cathay de Costa Rica S.A.',
         url: 'https://www.bancocathay.com',
         group: 'private',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const html = HTML(result);
@@ -175,7 +167,6 @@
         name: 'Banco Davivienda (Costa Rica) S.A.',
         url: 'http://www.davivienda.cr',
         group: 'private',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const html = HTML(result);
@@ -189,7 +180,6 @@
         name: 'Banco General (Costa Rica) S.A.',
         url: 'https://www.bgeneral.fi.cr/bgespanol/personal/index.asp',
         group: 'private',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const html = HTML(result);
@@ -203,7 +193,6 @@
         name: 'Banco Improsa S.A.',
         url: 'https://www.grupoimprosa.com/banco',
         group: 'private',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const html = HTML(result);
@@ -217,7 +206,6 @@
         name: 'Banco Lafise S.A.',
         url: 'https://www.lafise.com/DesktopModules/Servicios/API/TasaCambio/VerPorPaisActivo',
         group: 'private',
-        prefix: true,
         ready: true,
         method: 'post',
         data: {
@@ -242,7 +230,6 @@
         name: 'Banco Promérica S.A.',
         url: 'https://www.promerica.fi.cr/site/index.aspx',
         group: 'private',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const html = HTML(result);
@@ -256,7 +243,6 @@
         name: 'Banco Scotiabank de Costa Rica S.A.',
         url: 'http://www.scotiabankcr.com/Personas/Default.aspx',
         group: 'private',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const html = HTML(result);
@@ -271,7 +257,6 @@
         name: 'Prival Bank (Costa Rica) S.A.',
         url: 'https://www.prival.com/costa-rica/banca-privada/productos-servicios/canje-de-monedas',
         group: 'private',
-        prefix: true,
         ready: false,
         parse: (result) => {
           // const html = HTML(result);
@@ -286,7 +271,6 @@
         name: 'Financiera Cafsa S.A.',
         url: 'http://www.scotiabankcr.com/Personas/Default.aspx',
         group: 'finance',
-        prefix: true,
         ready: false,
         parse: (result) => {
           const html = HTML(result);
@@ -300,7 +284,6 @@
         name: 'Financiera Comeca S.A.',
         url: 'http://www.fincomeca.fi.cr',
         group: 'finance',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const html = HTML(result);
@@ -314,7 +297,6 @@
         name: 'Financiera Desyfin S.A.',
         url: 'http://www.desyfin.fi.cr',
         group: 'finance',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const html = HTML(result);
@@ -328,7 +310,6 @@
         name: 'Financiera G&T Continental Costa Rica S.A.',
         url: 'http://www.gytcontinental.fi.cr',
         group: 'finance',
-        prefix: true,
         ready: false,
         parse: (result) => {
           // const html = HTML(result);
@@ -342,7 +323,6 @@
         name: 'Grupo Mutual Alajuela - La Vivienda de Ahorro y Préstamo',
         url: 'http://www.grupomutual.fi.cr',
         group: 'mutual',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const html = HTML(result);
@@ -355,7 +335,6 @@
         name: 'Mutual Cartago de Ahorro y Préstamo (MUCAP)',
         url: 'http://www.mucap.fi.cr/prxs/_tipoCambio.aspx/getTipoCambio',
         group: 'mutual',
-        prefix: true,
         ready: true,
         method: 'post',
         data: '{"moneda":2}',
@@ -376,7 +355,6 @@
         name: 'Coope-ANDE N°1 R.L.',
         url: 'https://online.coope-ande.co.cr/coopeande/tipocambio',
         group: 'cooperative',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const html = HTML(result);
@@ -391,7 +369,6 @@
         name: 'Cooperativa COOCIQUE R.L.',
         url: 'https://coocique.fi.cr',
         group: 'cooperative',
-        prefix: true,
         ready: false,
         parse: (result) => {
           // const html = HTML(result);
@@ -405,7 +382,6 @@
         name: 'Cooperativa Coopealianza R.L.',
         url: 'http://www.coopealianza.fi.cr/tc/compra.html',
         group: 'cooperative',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const html = HTML(result);
@@ -418,7 +394,6 @@
         name: 'Cooperativa CREDECOOP R.L.',
         url: 'http://www.credecoop.fi.cr',
         group: 'cooperative',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const html = HTML(result);
@@ -432,7 +407,6 @@
         name: 'Cooperativa Nacional de Educadores R.L. (COOPENAE)',
         url: 'https://www.coopenae.cr/coopenae_virtual/TC.aspx',
         group: 'cooperative',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const html = HTML(result);
@@ -445,7 +419,6 @@
         name: 'Cooperativa San Marcos R.L.',
         url: 'http://www.csm.fi.cr',
         group: 'cooperative',
-        prefix: true,
         ready: true,
         parse: (result) => {
           const html = HTML(result);
@@ -492,7 +465,7 @@
     const showExchangeRates = (id) => {
       showSpinner(id);
       const entity = entities[id];
-      const url = entity.prefix ? `${PREFIX}${entity.url}` : entity.url;
+      const url = `${PREFIX}${entity.url}`;
       const method = entity.method || 'get';
       const data = entity.data;
       const settings = entity.settings;
