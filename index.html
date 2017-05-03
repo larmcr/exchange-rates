@@ -15,7 +15,7 @@
   <table>
     <thead>
       <tr>
-        <th>Tipo</th>
+        <th></th>
         <th>Entidad</th>
         <th>Compra</th>
         <th>Venta</th>
@@ -435,22 +435,29 @@
     };
 
     const showResult = (id, entity, result) => {
-      const eRs = entity.parse(result);
+      const valid = entity && result;
+      const eRs = valid ? entity.parse(result) : {
+        buy: '-',
+        sell: '-',
+        avg: '-'
+      };
       const cssClass = {
         '$': `tr-${id}`
       };
-      removeAndAddChildren(`tr-${id}`, [EE('td', cssClass, EE('div', `${SYMBOL} ${eRs.buy}`)), EE('td', cssClass, EE(
-        'div', `${SYMBOL} ${eRs.sell}`)), EE('td', cssClass, EE('div', `${SYMBOL} ${eRs.avg}`))]);
-      $(`#td-${id}`).add(EE('mark', {
-        '$': `tr-${id}`
-      }, (new Date).toLocaleString()));
+      removeAndAddChildren(`tr-${id}`, [
+        EE('td', cssClass, EE('div', `${SYMBOL} ${eRs.buy}`)), EE('td', cssClass, EE(
+          'div', `${SYMBOL} ${eRs.sell}`)), EE('td', cssClass, EE('div', `${SYMBOL} ${eRs.avg}`))
+      ]);
+      $(`#td-${id}`).add(EE('small', {
+        '$': `tr-${id} tag ${valid ? 'tertiary' : 'secondary'}`
+      }, valid ? (new Date).toLocaleString() : 'No disponible'));
     };
 
     const showError = (id, status, statusText, responseText) => {
       $(`.tr-${id}`).remove();
-      $(`#td-${id}`).add(EE('mark', {
-        '$': `tr-${id} secondary`
-      }, 'Error al consultar'));
+      $(`#td-${id}`).add(EE('small', EE('mark', {
+        '$': `tr-${id} tag secondary`
+      }, 'Error al consultar')));
     };
 
     const showSpinner = (id) => {
@@ -483,8 +490,14 @@
       for (let id in groups) {
         const group = groups[id];
         const tr = EE('tr', {
-          '@id': `${id}`
-        }, EE('td', EE('em', group)));
+            '@id': `${id}`,
+          },
+          EE('td', {
+            '@colspan': '5'
+          }, EE('mark', {
+            '$': 'tag'
+          }, group))
+        );
         list.push(tr);
       };
       $('tbody').add(list);
@@ -499,8 +512,8 @@
           '@id': id,
           '$': `entity small ${!ready ? 'disabled' : ''}`,
         };
-        if(!ready) attributes['@disabled'] = '';
-        const message = EE('div', {
+        if (!ready) attributes['@disabled'] = '';
+        const message = EE('small', {
           '$': `tr-${id} ${ready ? 'available' : 'disabled'}`,
         }, `${ready ? 'Disponible' : 'No disponible'}`);
         const button = EE('button', attributes, entity.name);
@@ -519,6 +532,8 @@
         if (entities[id].ready) {
           const entity = $(`#${id}`);
           entity.trigger('click', entity);
+        } else {
+          showResult(id);
         }
       };
     };
