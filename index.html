@@ -246,10 +246,9 @@
         ready: true,
         parse: (result) => {
           const html = HTML(result);
-          const rates = html.select('span');
-          console.info(rates);
-          const buy = rates[156].innerText.substr(1);
-          const sell = rates[158].innerText.substr(1);
+          const rates = html.select('p');
+          const buy = rates[24].innerText.split(':')[1].substr(1);
+          const sell = rates[25].innerText.split(':')[1].substr(1);
           return cleanData(buy, sell);
         }
       },
