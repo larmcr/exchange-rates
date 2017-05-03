@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <button id="query-all" class="inverse">
+  <button id="query-all" class="inverse rounded">
     Consultar todas las entidades
   </button>
   <table>
@@ -441,12 +441,16 @@
         sell: '-',
         avg: '-'
       };
-      const cssClass = {
+      const tdClass = {
         '$': `tr-${id}`
       };
+      const divClass = {
+        '$': 'alert animated'
+      };
       removeAndAddChildren(`tr-${id}`, [
-        EE('td', cssClass, EE('div', `${SYMBOL} ${eRs.buy}`)), EE('td', cssClass, EE(
-          'div', `${SYMBOL} ${eRs.sell}`)), EE('td', cssClass, EE('div', `${SYMBOL} ${eRs.avg}`))
+        EE('td', tdClass, EE('div', divClass, `${SYMBOL} ${eRs.buy}`)), EE('td', tdClass, EE(
+          'div', divClass, `${SYMBOL} ${eRs.sell}`)), EE('td', tdClass, EE('div', divClass,
+          `${SYMBOL} ${eRs.avg}`))
       ]);
       $(`#td-${id}`).add(EE('small', {
         '$': `tr-${id} tag ${valid ? 'tertiary' : 'secondary'}`
@@ -510,7 +514,7 @@
         const ready = entity.ready;
         const attributes = {
           '@id': id,
-          '$': `entity small ${!ready ? 'disabled' : ''}`,
+          '$': `entity small rounded ${!ready ? 'disabled' : ''}`,
         };
         if (!ready) attributes['@disabled'] = '';
         const message = EE('small', {
