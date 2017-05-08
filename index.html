@@ -6,18 +6,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://gitcdn.link/repo/Chalarangelo/mini.css/master/dist/mini-nord.min.css">
   <script src="http://minifiedjs.com/download/minified.js"></script>
+  <style>
+    #lbl-min {
+      background: #EBCB8B;
+      border: 1px solid #D08770;
+    }
+
+    #lbl-max {
+      background: #BF616A;
+      border: 1px solid #BF616A;
+      color: #ECEFF4;
+    }
+
+    .sticky-table {
+      position: -webkit-sticky;
+      position: -moz-sticky;
+      position: -ms-sticky;
+      position: -o-sticky;
+      position: sticky;
+      top: 0;
+    }
+  </style>
 </head>
 
 <body>
   <button id="query-all" class="inverse rounded">
-    Consultar todas las entidades
+    Todas las entidades
   </button>
   <div class="input-group">
     <input id="check-min-max" type="checkbox" tabindex="0">
-    <label id="label-min-max" for="check-min-max">Mínimos y Máximos</label>
+    <label id="label-min-max" for="check-min-max">
+      <span id="lbl-min">Mínimos</span> y <span id="lbl-max">Máximos</span>
+    </label>
   </div>
   <table>
-    <thead>
+    <thead class="sticky-table">
       <tr>
         <th></th>
         <th>Entidad</th>
@@ -451,12 +474,18 @@
       const divClasses = 'alert animated rounded';
 
       removeAndAddChildren(`tr-${id}`, [
-        EE('td', tdClass, EE('div', { 
-          '@val': `${eRs.buy}`, '$': `${divClasses} buy buy-${eRs.buy.replace('.', '-')}` }, `${SYMBOL} ${eRs.buy}`)), 
-        EE('td', tdClass, EE('div', { 
-          '@val': `${eRs.sell}`, '$': `${divClasses} sell sell-${eRs.sell.replace('.', '-')}` }, `${SYMBOL} ${eRs.sell}`)), 
-        EE('td', tdClass, EE('div', { 
-          '@val': `${eRs.avg}`, '$': `${divClasses} avg avg-${eRs.avg.replace('.', '-')}` }, `${SYMBOL} ${eRs.avg}`))
+        EE('td', tdClass, EE('div', {
+          '@val': `${eRs.buy}`,
+          '$': `${divClasses} buy buy-${eRs.buy.replace('.', '-')}`
+        }, `${SYMBOL} ${eRs.buy}`)),
+        EE('td', tdClass, EE('div', {
+          '@val': `${eRs.sell}`,
+          '$': `${divClasses} sell sell-${eRs.sell.replace('.', '-')}`
+        }, `${SYMBOL} ${eRs.sell}`)),
+        EE('td', tdClass, EE('div', {
+          '@val': `${eRs.avg}`,
+          '$': `${divClasses} avg avg-${eRs.avg.replace('.', '-')}`
+        }, `${SYMBOL} ${eRs.avg}`))
       ]);
       $(`#td-${id}`).add(EE('small', {
         '$': `tr-${id} tag ${valid ? 'tertiary' : 'secondary'}`
@@ -553,7 +582,7 @@
       const length = elements.length;
       let min = 1 / 0;
       let max = -1 / 0;
-      for(let i = 0; i < length; i++) {
+      for (let i = 0; i < length; i++) {
         const val = parseFloat($(elements[i]).get('@val'));
         min = val < min ? val : min;
         max = val > max ? val : max;
@@ -570,8 +599,7 @@
         showMinAndMaxByType('buy');
         showMinAndMaxByType('sell');
         showMinAndMaxByType('avg');
-      }
-      else {
+      } else {
         $('.buy').set('-urgent -critical');
         $('.sell').set('-urgent -critical');
         $('.avg').set('-urgent -critical');
@@ -586,5 +614,9 @@
     });
   </script>
 </body>
+
+<footer class="sticky">
+  <p>0.1</p>
+</footer>
 
 </html>
