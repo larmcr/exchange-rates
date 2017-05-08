@@ -12,6 +12,10 @@
   <button id="query-all" class="inverse rounded">
     Consultar todas las entidades
   </button>
+  <div class="input-group">
+    <input id="check-min-max" type="checkbox" tabindex="0">
+    <label id="label-min-max" for="check-min-max">Mínimos y Máximos</label>
+  </div>
   <table>
     <thead>
       <tr>
@@ -444,13 +448,15 @@
       const tdClass = {
         '$': `tr-${id}`
       };
-      const divClass = {
-        '$': 'alert animated'
-      };
+      const divClasses = 'alert animated rounded';
+
       removeAndAddChildren(`tr-${id}`, [
-        EE('td', tdClass, EE('div', divClass, `${SYMBOL} ${eRs.buy}`)), EE('td', tdClass, EE(
-          'div', divClass, `${SYMBOL} ${eRs.sell}`)), EE('td', tdClass, EE('div', divClass,
-          `${SYMBOL} ${eRs.avg}`))
+        EE('td', tdClass, EE('div', { 
+          '@val': `${eRs.buy}`, '$': `${divClasses} buy buy-${eRs.buy.replace('.', '-')}` }, `${SYMBOL} ${eRs.buy}`)), 
+        EE('td', tdClass, EE('div', { 
+          '@val': `${eRs.sell}`, '$': `${divClasses} sell sell-${eRs.sell.replace('.', '-')}` }, `${SYMBOL} ${eRs.sell}`)), 
+        EE('td', tdClass, EE('div', { 
+          '@val': `${eRs.avg}`, '$': `${divClasses} avg avg-${eRs.avg.replace('.', '-')}` }, `${SYMBOL} ${eRs.avg}`))
       ]);
       $(`#td-${id}`).add(EE('small', {
         '$': `tr-${id} tag ${valid ? 'tertiary' : 'secondary'}`
@@ -542,10 +548,41 @@
       };
     };
 
+    const showMinAndMaxByType = (type) => {
+      const elements = $(`.${type}`);
+      const length = elements.length;
+      let min = 1 / 0;
+      let max = -1 / 0;
+      for(let i = 0; i < length; i++) {
+        const val = parseFloat($(elements[i]).get('@val'));
+        min = val < min ? val : min;
+        max = val > max ? val : max;
+      }
+      const minClass = `.${type}-${_.formatValue('#.00', min).toString().replace('.', '-')}`;
+      const maxClass = `.${type}-${_.formatValue('#.00', max).toString().replace('.', '-')}`;
+      $(minClass).set('+urgent');
+      $(maxClass).set('+critical');
+    };
+
+    const showMinAndMax = () => {
+      const checked = !window.getComputedStyle($('#label-min-max')[0], ':after').backgroundColor.includes('0');
+      if (checked) {
+        showMinAndMaxByType('buy');
+        showMinAndMaxByType('sell');
+        showMinAndMaxByType('avg');
+      }
+      else {
+        $('.buy').set('-urgent -critical');
+        $('.sell').set('-urgent -critical');
+        $('.avg').set('-urgent -critical');
+      }
+    };
+
     $(() => {
       addGroups();
       addEntities();
       $('#query-all').onClick(onQueryAllClicked);
+      $('#check-min-max').onChange(showMinAndMax);
     });
   </script>
 </body>
